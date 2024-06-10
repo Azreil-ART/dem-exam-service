@@ -62,7 +62,7 @@ const loginHandler = async () => {
     toast.add({
       severity: "error",
       summary: "Ошибка",
-      detail: "Неверный логин или пароль",
+      detail: "Нет подключения к серверу",
       life: 3000,
     });
   }

@@ -1,9 +1,32 @@
-export default defineEventHandler(async (event) => {
-  const body = await readBody(event);
+import { PrismaClient, Zayavka } from "@prisma/client";
 
-  const result = await $fetch(process.env.NUXT_BACKEND_URL + '/zayavka/client/create', {
-    method: 'POST',
-    body: body
-  })
+const prisma = new PrismaClient();
+
+export default eventHandler(async (event) => {
+  const body: Zayavka = await readBody(event);
+  const zayavkaObj = {
+    equipment: body.equipment,
+    clientId: body.clientId,
+    description: body.description,
+    issueType: body.issueType,
+    status: 'В ожидании',
+    createdAt: new Date()
+  };
+
+  let result: {
+    status: boolean;
+    data:  any;
+  } = {
+    status: false,
+    data: {},
+  };
+  try {
+    result.data = await prisma.zayavka.create({
+      data: zayavkaObj,
+    });
+    result.status = true;
+  } catch (error) {
+    result.data = error;
+  }
   return result;
-})
+});

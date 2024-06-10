@@ -1,4 +1,17 @@
-export default defineEventHandler(async (event) => {
-  const result = await $fetch(process.env.NUXT_BACKEND_URL + '/zayavka/client/findall')
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
+export default eventHandler(async (event) => {
+  let result: {
+    status: boolean;
+    data:  any;
+  } = {
+    status: false,
+    data: {},
+  };
+  result.data = await prisma.zayavka.findMany();
+  result.status = true;
+
   return result;
-})
+});
