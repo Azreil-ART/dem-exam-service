@@ -22,18 +22,27 @@ model Zayavka {
   executorId  Int?
   status      String
 
-  client      User     @relation("Client", fields: [clientId], references: [id])
-  executor    User?     @relation("Executor", fields: [executorId], references: [id])
-  createdAt    DateTime @db.Timestamptz(6)
+  client        User        @relation("Client", fields: [clientId], references: [id])
+  executor      User?       @relation("Executor", fields: [executorId], references: [id])
+  comment       Comment[]   @relation("Zayavka")
+  createdAt     DateTime    @db.Timestamptz(6)
 }
 
 model User {
-  id            Int      @id @default(autoincrement())
+  id            Int         @id @default(autoincrement())
   fullName      String
-  role          String
+  role          String      @default("Клиент")
   organization  String
-  login         String   @unique
+  login         String      @unique
   password      String
-  clientZayavki Zayavka[] @relation("Client")
+  token         String      @unique
+  clientZayavki   Zayavka[] @relation("Client")
   executorZayavki Zayavka[] @relation("Executor")
+}
+
+model Comment {
+  id            Int      @id @default(autoincrement())
+  text          String   @unique
+  zayavkaId     Int 
+  zayavka      Zayavka?     @relation("Zayavka", fields: [zayavkaId], references: [id])
 }
