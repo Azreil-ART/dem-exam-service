@@ -17,11 +17,11 @@
           <label>Организация</label>
         </FloatLabel>
         <FloatLabel>
-          <InputText v-model="registerData.password" />
+          <InputText type="password" v-model="registerData.password" />
           <label>Пароль</label>
         </FloatLabel>
         <FloatLabel>
-          <InputText v-model="confirmPassword" />
+          <InputText type="password" v-model="confirmPassword" />
           <label>Повторите пароль</label>
         </FloatLabel>
       </div>
@@ -33,7 +33,7 @@
           <label>Логин</label>
         </FloatLabel>
         <FloatLabel>
-          <InputText v-model="loginData.password" />
+          <InputText type="password" v-model="loginData.password" />
           <label>Пароль</label>
         </FloatLabel>
 
